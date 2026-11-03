@@ -1,0 +1,125 @@
+.main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  height: 100%;
+  width: 100%;
+
+  .links {
+    display: flex;
+    flex-direction: column;
+    margin-top: -20px;
+
+    a {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+
+      color: black;
+      font-size: 24px;
+      padding: 40px;
+      border-radius: 500px;
+
+      background-image: linear-gradient(
+        to right,
+        #dde0e2,
+        #ffb30000,
+        #f498ae00
+      );
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+
+        background-image: linear-gradient(
+          to right,
+          #ffb300,
+          #f498ae00,
+          #f498ae00
+        );
+
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      &:hover::before {
+        opacity: 1;
+      }
+    }
+
+    a:nth-child(2n) {
+      text-align: end;
+
+      background-image: linear-gradient(to left, #919598, #f498ae00, #f498ae00);
+
+      &::before {
+        background-image: linear-gradient(
+          to left,
+          #ffb300,
+          #f498ae00,
+          #f498ae00
+        );
+      }
+    }
+  }
+
+  .side-bar-image {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 200px);
+    grid-template-areas:
+      "first first"
+      "second three"
+      "second four";
+    gap: 10px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .first {
+      grid-area: first;
+      border-radius: 20px 120px 20px 120px;
+      overflow: hidden;
+    }
+    .second {
+      grid-area: second;
+      height: 100%;
+      border-radius: 120px 20px 120px 20px;
+      overflow: hidden;
+    }
+    .three {
+      grid-area: three;
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    .four {
+      grid-area: four;
+      border-radius: 20px 120px 120px 20px;
+      overflow: hidden;
+    }
+  }
+}
+
+@media (min-width: 2000px) {
+  .main {
+    .links {
+      margin-top: 82px;
+      gap: 50px;
+
+      a {
+        font-size: 40px;
+        padding: 64px;
+      }
+    }
+
+    .side-bar-image {
+      grid-template-rows: repeat(3, 300px);
+      gap: 16px;
+    }
+  }
+}

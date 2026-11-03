@@ -1,0 +1,44 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: auto;
+  max-width: 1920px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  h1 {
+    font-size: 258px;
+    line-height: 0.75;
+    margin: 0;
+    padding: 0;
+    a {
+      color: black;
+      font-family: "YFF Rare";
+      font-weight: 600;
+      line-height: 0.9;
+      transition: color 0.2s ease;
+    }
+    :hover {
+      color: rgb(236, 153, 0);
+    }
+  }
+  h2 {
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+  }
+  .test {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+  .section {
+    height: 70%;
+    justify-content: flex-end;
+    padding: 40px;
+    border-radius: 0 1000px 1000px 0;
+    font-size: 50px;
+    font-weight: bold;
+    background-image: linear-gradient(to left, #919598, #f498ae00);
+  }
+}
