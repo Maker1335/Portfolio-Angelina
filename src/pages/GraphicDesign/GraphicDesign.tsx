@@ -1,18 +1,19 @@
+import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import Masonry from "react-masonry-css";
 import { graphicDesignProjects } from "../../data/projects";
 import "./GraphicDesign.scss";
-import { useEffect, useState } from "react";
 
 const breakpointColumns = {
   default: 4,
-  1200: 3,
-  700: 2,
+  1200: 4,
+  1000: 3,
+  600: 2,
 };
 
-function GraphicDesign() {
+function GraphicDesignPage() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  // Закрытие изображения клавишей Escape
   useEffect(() => {
     if (!selectedImage) return;
 
@@ -26,7 +27,6 @@ function GraphicDesign() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedImage]);
 
-  // Запрет прокрутки страницы при открытом изображении
   useEffect(() => {
     if (!selectedImage) return;
 
@@ -37,21 +37,25 @@ function GraphicDesign() {
       document.body.style.overflow = previousOverflow;
     };
   }, [selectedImage]);
+
   return (
-    <div className="GraphicDesign">
+    <main className="graphic-design-page">
       <Masonry
         breakpointCols={breakpointColumns}
-        className="gallery"
-        columnClassName="gallery-column"
+        className="graphic-design-page__gallery"
+        columnClassName="graphic-design-page__gallery-column"
       >
         {graphicDesignProjects.map((project) => (
           <img
             key={project.id}
-            className="gallery-item"
+            className="graphic-design-page__gallery-item"
             src={project.image}
             alt={project.title}
             loading="lazy"
             onClick={() => setSelectedImage(project.image)}
+            tabIndex={0}
+            role="button"
+            aria-label={`Открыть изображение: ${project.title}`}
             onKeyDown={(event) => {
               if (event.key === "Enter" || event.key === " ") {
                 event.preventDefault();
@@ -61,26 +65,43 @@ function GraphicDesign() {
           />
         ))}
       </Masonry>
+
       {selectedImage && (
-        <div className="image-modal" onClick={() => setSelectedImage(null)}>
+        <div
+          className="graphic-design-page__modal"
+          onClick={() => setSelectedImage(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Просмотр изображения"
+        >
           <button
             type="button"
-            className="image-modal__close"
-            onClick={() => setSelectedImage(null)}
+            className="graphic-design-page__modal-close"
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedImage(null);
+            }}
             aria-label="Закрыть изображение"
           >
-            ×
+            ✕
           </button>
 
           <img
+            className="graphic-design-page__modal-image"
             src={selectedImage}
             alt="Увеличенное изображение"
-            onClick={(event) => event.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
           />
         </div>
       )}
-    </div>
+
+      <div className="graphic-design-page__footer">
+        <NavLink to="/" className="graphic-design-page__back-button">
+          Вернуться на главную
+        </NavLink>
+      </div>
+    </main>
   );
 }
 
-export default GraphicDesign;
+export default GraphicDesignPage;

@@ -1,38 +1,31 @@
 .header {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  width: auto;
-  max-width: 1920px;
-  margin: 0 auto;
-  margin-bottom: 20px;
-  h1 {
-    font-size: 258px;
-    line-height: 0.75;
-    margin: 0;
-    padding: 0;
-    a {
-      color: black;
-      font-family: "YFF Rare";
-      font-weight: 600;
-      line-height: 0.9;
-      transition: color 0.2s ease;
-    }
-    :hover {
-      color: rgb(236, 153, 0);
-    }
-  }
-  h2 {
-    font-size: 40px;
-    display: flex;
-    align-items: center;
-  }
-  .test {
+  &__inner {
+    max-width: 1920px;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
   }
-  .section {
+  &__logo {
+    font-size: 258px;
+    // line-height: 0.75;
+    margin: 0;
+    padding: 0;
+    &-link {
+      color: black;
+      font-family: "YFF Rare", sans-serif;
+      font-weight: 600;
+      line-height: 0.9;
+      transition: color 0.2s ease;
+      &:hover {
+        color: rgb(236, 153, 0);
+      }
+    }
+  }
+
+  &__section-title {
+    display: flex;
+    align-items: center;
     height: 70%;
     justify-content: flex-end;
     padding: 40px;
@@ -40,5 +33,28 @@
     font-size: 50px;
     font-weight: bold;
     background-image: linear-gradient(to left, #919598, #f498ae00);
+  }
+}
+@media (max-width: 1000px) {
+  .header {
+    margin-bottom: 20px;
+    &__inner {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    &__logo {
+      font-size: clamp(90px, 40vw, 205px);
+      width: 100%;
+      text-align: center;
+
+      &-link {
+        display: block;
+      }
+    }
+    &__section-title {
+      padding: 20px;
+      font-size: clamp(25px, 6vw, 35px);
+    }
   }
 }

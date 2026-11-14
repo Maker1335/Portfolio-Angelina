@@ -1,13 +1,111 @@
-.Contacts {
-  font-size: 30px;
-  ul {
-    margin-top: 20px;
+.contacts-page {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: #333;
 
-    li {
-      list-style: circle;
+  &__section {
+    margin-bottom: 40px;
+  }
+
+  &__main-title {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #000;
+  }
+
+  &__subtitle {
+    font-size: clamp(24px, 4vw, 32px);
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #000;
+  }
+
+  &__text {
+    font-size: 24px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+
+    &--bold {
+      font-weight: 600;
     }
   }
-  .email {
-    margin-top: 20px;
+
+  &__list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  &__item {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 12px;
+    font-size: 18px;
+    line-height: 1.5;
+
+    &::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #ffb300;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+  }
+
+  &__footer {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 2px solid #ededed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  &__email-link {
+    font-size: 24px;
+    font-weight: 600;
+    color: #000;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #ffb300;
+    }
+  }
+
+  &__back-button {
+    display: inline-block;
+    padding: 14px 32px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+    text-decoration: none;
+    background-color: #ededed;
+    border-radius: 30px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: #dedede;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .contacts-page {
+    padding: 20px 16px;
+
+    &__item {
+      font-size: 16px;
+    }
+
+    &__email-link {
+      font-size: 20px;
+      word-break: break-all;
+    }
   }
 }

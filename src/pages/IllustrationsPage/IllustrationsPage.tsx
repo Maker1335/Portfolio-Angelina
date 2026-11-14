@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import Masonry from "react-masonry-css";
 import {
   illustrationProjects,
   type ProjectCategory,
 } from "../../data/projects";
 import "./IllustrationsPage.scss";
-import { NavLink } from "react-router-dom";
 
 const INITIAL_COUNT = 12;
 const LOAD_COUNT = 12;
@@ -21,7 +21,7 @@ const categories: (ProjectCategory | "все")[] = [
 const breakpointColumns = {
   default: 4,
   1200: 4,
-  900: 3,
+  1000: 3,
   600: 2,
 };
 
@@ -29,7 +29,6 @@ function IllustrationsPage() {
   const [activeCategory, setActiveCategory] = useState<ProjectCategory | "все">(
     "все",
   );
-
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -54,27 +53,19 @@ function IllustrationsPage() {
     setVisibleCount(INITIAL_COUNT);
   };
 
-  // Закрытие изображения клавишей Escape
   useEffect(() => {
     if (!selectedImage) return;
-
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setSelectedImage(null);
-      }
+      if (event.key === "Escape") setSelectedImage(null);
     };
-
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedImage]);
 
-  // Запрет прокрутки страницы при открытом изображении
   useEffect(() => {
     if (!selectedImage) return;
-
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-
     return () => {
       document.body.style.overflow = previousOverflow;
     };
@@ -82,12 +73,21 @@ function IllustrationsPage() {
 
   return (
     <main className="illustrations-page">
-      <div className="filter-bar">
+      <div
+        className="illustrations-page__filters"
+        role="group"
+        aria-label="Фильтр категорий"
+      >
         {categories.map((category) => (
           <button
             type="button"
             key={category}
-            className={activeCategory === category ? "active" : ""}
+            className={`illustrations-page__filter-btn ${
+              activeCategory === category
+                ? "illustrations-page__filter-btn--active"
+                : ""
+            }`}
+            aria-pressed={activeCategory === category}
             onClick={() => changeCategory(category)}
           >
             {category}
@@ -97,13 +97,13 @@ function IllustrationsPage() {
 
       <Masonry
         breakpointCols={breakpointColumns}
-        className="gallery"
-        columnClassName="gallery-column"
+        className="illustrations-page__gallery"
+        columnClassName="illustrations-page__gallery-column"
       >
         {visibleProjects.map((project) => (
           <img
             key={project.id}
-            className="gallery-item"
+            className="illustrations-page__gallery-item"
             src={project.image}
             alt={project.title}
             title={project.title}
@@ -121,40 +121,60 @@ function IllustrationsPage() {
         ))}
       </Masonry>
 
-      {hasMore && (
-        <div className="load-more-container">
-          <button type="button" className="load-more-button" onClick={loadMore}>
+      {hasMore ? (
+        <div className="illustrations-page__load-more-container">
+          <button
+            type="button"
+            className="illustrations-page__load-more-btn"
+            onClick={loadMore}
+          >
             Загрузить ещё
           </button>
         </div>
+      ) : (
+        filteredProjects.length > 0 && (
+          <div className="illustrations-page__footer">
+            <NavLink to="/" className="illustrations-page__back-button">
+              Вернуться на главную
+            </NavLink>
+          </div>
+        )
       )}
 
-      {!hasMore && filteredProjects.length > 0 && (
-        <p className="gallery-end">
-          <NavLink to="/">Вернуться на главный экран</NavLink>
-        </p>
-      )}
-
-      {/* {filteredProjects.length === 0 && <p>В этой категории пока нет работ.</p>} */}
       {filteredProjects.length === 0 && (
-        <NavLink to="/">Вернуться на главный экран</NavLink>
+        <div className="illustrations-page__empty-state">
+          <p>В этой категории пока нет работ.</p>
+          <NavLink to="/" className="illustrations-page__back-button">
+            Вернуться на главную
+          </NavLink>
+        </div>
       )}
 
       {selectedImage && (
-        <div className="image-modal" onClick={() => setSelectedImage(null)}>
+        <div
+          className="illustrations-page__modal"
+          onClick={() => setSelectedImage(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Просмотр изображения"
+        >
           <button
             type="button"
-            className="image-modal__close"
-            onClick={() => setSelectedImage(null)}
+            className="illustrations-page__modal-close"
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedImage(null);
+            }}
             aria-label="Закрыть изображение"
           >
-            ×
+            ✕
           </button>
 
           <img
+            className="illustrations-page__modal-image"
             src={selectedImage}
             alt="Увеличенное изображение"
-            onClick={(event) => event.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
           />
         </div>
       )}

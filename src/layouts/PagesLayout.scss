@@ -1,0 +1,9 @@
+@import "../style/mixins.scss";
+.pages-layout {
+  @include container;
+}
+@media (max-width: 600px) {
+  .pages-layout {
+    @include container(10px 10px 0 10px);
+  }
+}

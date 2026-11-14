@@ -1,15 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
 import HomePage from "../pages/HomePage/HomePage";
 import IllustrationsPage from "../pages/IllustrationsPage/IllustrationsPage";
-import Layouts from "../layouts/Layouts";
-import LayoutsPages from "../layouts/LayoutsPages";
+import MainLayout from "../layouts/MainLayout";
+import PagesLayout from "../layouts/PagesLayout";
 import GraphicDesign from "../pages/GraphicDesign/GraphicDesign";
 import Contacts from "../pages/Contacts/Contacts";
+import NotFound from "../pages/NotFound/NotFound";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layouts />,
+    element: <MainLayout />,
     children: [
       {
         index: true,
@@ -18,8 +19,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/",
-    element: <LayoutsPages />,
+    element: <PagesLayout />,
     children: [
       {
         path: "Illustrations",
@@ -34,6 +34,10 @@ const router = createBrowserRouter([
         element: <Contacts />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 
