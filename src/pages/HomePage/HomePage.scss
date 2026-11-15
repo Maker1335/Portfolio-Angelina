@@ -114,14 +114,13 @@
     gap: 20px;
 
     &__nav {
-      gap: 10px;
       &-link {
         padding: 22px;
       }
     }
 
     &__gallery {
-      grid-template-rows: repeat(3, 150px);
+      grid-template-rows: repeat(3, 110px);
       gap: 0;
     }
     &__image {

@@ -14,7 +14,7 @@ function HomePage() {
         <Header />
         <nav className="home-page__nav">
           <NavLink to="GraphicDesign" className="home-page__nav-link">
-            Графисческий дизайн
+            Граф. дизайн
           </NavLink>
           <NavLink
             to="Illustrations"

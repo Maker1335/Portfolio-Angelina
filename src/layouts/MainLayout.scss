@@ -1,10 +1,10 @@
-@import "../style/mixins.scss";
+@use "../style/mixins" as mixins;
 
 .main-layout {
-  @include container;
+  @include mixins.container;
 }
 @media (max-width: 600px) {
   .main-layout {
-    @include container(10px 10px 0 10px);
+    @include mixins.container(10px 10px 0 10px);
   }
 }

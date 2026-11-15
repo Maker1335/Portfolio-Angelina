@@ -7,38 +7,43 @@ import GraphicDesign from "../pages/GraphicDesign/GraphicDesign";
 import Contacts from "../pages/Contacts/Contacts";
 import NotFound from "../pages/NotFound/NotFound";
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <MainLayout />,
+      children: [
+        {
+          index: true,
+          element: <HomePage />,
+        },
+      ],
+    },
+    {
+      element: <PagesLayout />,
+      children: [
+        {
+          path: "Illustrations",
+          element: <IllustrationsPage />,
+        },
+        {
+          path: "GraphicDesign",
+          element: <GraphicDesign />,
+        },
+        {
+          path: "Contacts",
+          element: <Contacts />,
+        },
+      ],
+    },
+    {
+      path: "*",
+      element: <NotFound />,
+    },
+  ],
   {
-    path: "/",
-    element: <MainLayout />,
-    children: [
-      {
-        index: true,
-        element: <HomePage />,
-      },
-    ],
+    basename: import.meta.env.BASE_URL,
   },
-  {
-    element: <PagesLayout />,
-    children: [
-      {
-        path: "Illustrations",
-        element: <IllustrationsPage />,
-      },
-      {
-        path: "GraphicDesign",
-        element: <GraphicDesign />,
-      },
-      {
-        path: "Contacts",
-        element: <Contacts />,
-      },
-    ],
-  },
-  {
-    path: "*",
-    element: <NotFound />,
-  },
-]);
+);
 
 export default router;
